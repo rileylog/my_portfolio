@@ -1,5 +1,7 @@
 MyPortfolio::Application.routes.draw do
 
+  devise_for :users
+
 root :to => 'static_pages#home'  
  
   get "about_me", to: "static_pages#about_me", as: :about_me
