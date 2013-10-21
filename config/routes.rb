@@ -1,4 +1,7 @@
 MyPortfolio::Application.routes.draw do
+get "contact-us", to: 'contact_new#new', as: :contact
+post "contact-us", to: 'contact_new#create', as: :contact
+
 
   devise_for :users
 
@@ -6,7 +9,9 @@ root :to => 'static_pages#home'
  
   get "about_me", to: "static_pages#about_me", as: :about_me
   get "projects", to: "static_pages#projects", as: :projects
-  get "contact", to: "static_pages#contact_info", as: :contact
+  
+
+  # get "contact", to: "static_pages#contact_info", as: :contact
 
 
   # The priority is based upon order of creation:
