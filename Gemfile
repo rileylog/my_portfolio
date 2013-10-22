@@ -32,7 +32,19 @@ group :development do
   gem 'meta_request'
   gem 'xray-rails'
   gem 'letter_opener'
+  gem 'guard'
+  gem 'rb-fsevent', require: false
+  gem 'guard-pow'
+  gem 'guard-minitest'
+  gem 'guard-livereload'
+  gem 'rack-livereload'
+  gem 'ruby_gntp'
 end
+
+group :development, :test do
+  gem 'minitest-rails'
+  gem 'factory_girl_rails', '>=4.2.0'
+end  
 
 gem 'jquery-rails'
 
