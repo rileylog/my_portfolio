@@ -1,4 +1,5 @@
 MyPortfolio::Application.routes.draw do
+
 get "contact-us", to: 'contact_new#new', as: :contact
 post "contact-us", to: 'contact_new#create', as: :contact
 
