@@ -1,16 +1,24 @@
 MyPortfolio::Application.routes.draw do
 
-get "contact-us", to: 'contact_new#new', as: :contact
-post "contact-us", to: 'contact_new#create', as: :contact
-
+  resources :posts
+  get '/posts/:post_id/pictures/new', to: 'posts#new_image', as: :new_image
+  post '/posts/:post_id/pictures/new', to: 'posts#create_image', as: :create_image
 
   devise_for :users
 
+  get "contact-us", to: 'contact_new#new', as: :contact
+  post "contact-us", to: 'contact_new#create', as: :contact
+
 root :to => 'static_pages#home'  
  
-  get "about_me", to: "static_pages#about_me", as: :about_me
+  get "about-me", to: "static_pages#about_me", as: :about_me
   get "projects", to: "static_pages#projects", as: :projects
+  get "posts", to: "posts#index", as: :posts  
+  post "posts", to: "posts#create", as: :posts
   
+
+  # get "contact-us", to: 'contact_new#new', as: :contact
+  # post "contact-us", to: 'contact_new#create', as: :contact
 
   # get "contact", to: "static_pages#contact_info", as: :contact
 

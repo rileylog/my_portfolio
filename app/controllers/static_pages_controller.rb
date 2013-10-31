@@ -8,6 +8,6 @@ class StaticPagesController < ApplicationController
   def projects
   end
 
-  def contact_info
+  def contact_new
   end
 end

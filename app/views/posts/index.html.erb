@@ -1,0 +1,31 @@
+<h1>Listing posts</h1>
+
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>Body</th>
+    <th>Author</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+
+<% @posts.each do |post| %>
+  <tr>
+    <td><%= post.subject %></td>
+    <td><%= post.body %></td>
+    <td><%= post.author %></td>
+    <%= image_tag post.pictures.first.image.url(:small) unless post.pictures.empty? %>
+    <td><%= link_to 'Show', post %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to "New Image", new_image_path(post_id: post.id) %>
+  </tr>
+
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Post', new_post_path %>
