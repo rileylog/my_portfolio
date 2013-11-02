@@ -5,6 +5,11 @@
     <%= f.input :subject %>
     <%= f.input :body %>
     <%= f.input :author %>
+    <%= f.simple_fields_for :pictures do |p| %>
+      <%= p.input :image %>
+      <%= p.input :title %>
+      <%= p.input :description %>
+    <% end %>
   </div>
 
   <div class="form-actions">

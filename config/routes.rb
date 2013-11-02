@@ -15,7 +15,7 @@ root :to => 'static_pages#home'
   get "projects", to: "static_pages#projects", as: :projects
   get "posts", to: "posts#index", as: :posts  
   post "posts", to: "posts#create", as: :posts
-  
+  get "path", to: 'controller#action', as: :name_of_path
 
   # get "contact-us", to: 'contact_new#new', as: :contact
   # post "contact-us", to: 'contact_new#create', as: :contact
