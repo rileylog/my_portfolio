@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :post do
-    subject "MyString"
-    body "MyText"
-    author "MyString"
+    subject { Faker::HipsterIpsum.phrase }
+    body { Faker::DizzleIpsum.paragraph }
+    author { Faker::Name.first_name }
   end
 end

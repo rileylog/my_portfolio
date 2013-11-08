@@ -1,0 +1,21 @@
+<div class="posts-page" id="post-<%=post.id %>">
+        <div class="post-body">
+        <div class='row'>
+          <div class='col-sm-6 text-center'>
+            <%= image_tag post.pictures.first.image.url(:large), class: 'featured-image img-responsive img-thumbnail' %>
+          </div>
+          <div class='col-sm-6'>
+            <h2><%= post.name.titleize %></h2>
+            <h3>By: <%= post.author.try(:full_name).titleize %></h3>
+            <p><%= simple_format post.body %></p>
+            <hr>
+          </div>          
+        </div>
+        <hr>
+        <div class='project-thumbnails'>
+          <% post.pictures.each do |pic| %>
+            <%= image_tag(pic.image.url(:thumb), class: 'img-responsive img-thumbnail', data: { url:  pic.image.url(:large) } )%>
+          <% end %>
+        </div>
+        </div>
+</div>      
