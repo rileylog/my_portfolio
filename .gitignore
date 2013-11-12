@@ -18,3 +18,5 @@
 .ruby-gemset
 .ruby-version
 .powenv
+# Ignore application configuration
+/config/application.yml

@@ -4,10 +4,12 @@
 <div class='row'>
   <% @posts.each do |post| %>
     <div class='post-tile col-xs-6 col-sm-4 col-md-3 no-gutters' >
+
       <div class='post-info'>
         <h4><%=post.subject%></h4>
         <p><%=post.author%></p>
-        <p><a href="#post-<%=post.id %>" >Read More</a></p>
+        <!-- <p><a href="#post-<%=post.id %>" >Read More</a></p> -->
+        <p><%= link_to "Read More", post_path(post) %>
       </div>
 
     <%= image_tag post.pictures.first.image.url(:medium), class: 'img-responsive' unless post.pictures.empty? %>
