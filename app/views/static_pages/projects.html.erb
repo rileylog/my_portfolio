@@ -13,29 +13,54 @@ var x=new google.maps.LatLng(40.9269,-111.8800);
 var y=new google.maps.LatLng(41.0781,-111.8353);
 var z=new google.maps.LatLng(41.7378,-111.8308);
 
+var a=new google.maps.LatLng(39.1839,-111.1343);
+var b=new google.maps.LatLng(40.25,-111.2833);
+var c=new google.maps.LatLng(40.3269,-111.3800);
+
 function initialize()
 {
 var mapProp = {
   center:x,
-  zoom:5,
+  zoom:7,
   mapTypeId:google.maps.MapTypeId.ROADMAP
   };
 
-var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+window.map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
-var myTrip=[v,w,x,y,v];
+var myTrip=[v,w,x,y];
 var flightPath=new google.maps.Polygon({
   path:myTrip,
   strokeColor:"#0000FF",
   strokeOpacity:0.5,
   strokeWeight:2
   });
+google.maps.event.addListener(flightPath, 'click', addPoint);
 
 flightPath.setMap(map);
 
+var myTrip=[a,b,c];
+var flightPath=new google.maps.Polygon({
+  path:myTrip,
+  strokeColor:"#0000FF",
+  strokeOpacity:0.5,
+  strokeWeight:2
+  });
+google.maps.event.addListener(flightPath, 'click', addPoint);
+
+flightPath.setMap(map);
+
+google.maps.event.addListener(map, 'click', addPoint);
 
 }
 
+function addPoint(event) {
+  console.log(event);
+  var latlngpoint = event.latLng;
+  var marker = new google.maps.Marker({
+    position: latlngpoint,
+    map: window.map
+  })
+}
 
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
