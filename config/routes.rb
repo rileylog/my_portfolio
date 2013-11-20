@@ -1,10 +1,13 @@
 MyPortfolio::Application.routes.draw do
 
+  resources :admins
+
+
   resources :posts
   get '/posts/:post_id/pictures/new', to: 'posts#new_image', as: :new_image
   post '/posts/:post_id/pictures/new', to: 'posts#create_image', as: :create_image
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   get "contact-us", to: 'contact_new#new', as: :contact
   post "contact-us", to: 'contact_new#create', as: :contact

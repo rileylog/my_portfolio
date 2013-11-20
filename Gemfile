@@ -13,6 +13,8 @@ gem "paperclip", "~> 3.0"
 gem 'aws-sdk', '~> 1.5.7'
 gem 'rolify'
 gem 'cancan'
+gem 'draper', '~> 1.3'
+gem 'omniauth-google-oauth2'
 
 # Gems used only for assets and not required
 # in production environments by default.
