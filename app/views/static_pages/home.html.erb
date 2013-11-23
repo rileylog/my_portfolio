@@ -16,6 +16,9 @@ var z=new google.maps.LatLng(41.7378,-111.8308);
 var a=new google.maps.LatLng(39.1839,-111.1343);
 var b=new google.maps.LatLng(40.25,-111.2833);
 var c=new google.maps.LatLng(40.3269,-111.3800);
+// var marker;
+var map;
+var geocoder;
 
 function initialize()
 {
@@ -34,6 +37,9 @@ var flightPath=new google.maps.Polygon({
   strokeOpacity:0.5,
   strokeWeight:2
   });
+
+  geocoder = new google.maps.Geocoder();
+
 google.maps.event.addListener(flightPath, 'click', addPoint);
 
 flightPath.setMap(map);
@@ -52,33 +58,63 @@ flightPath.setMap(map);
 google.maps.event.addListener(map, 'click', addPoint);
 
 
-
-
 }
 
+var main_marker = null;
+function clearOverlays() {
+  if (main_marker != null) {
+    main_marker.setMap(null);
+  }
+  main_marker = null;
+}
+
+
 function addPoint(event) {
+  clearOverlays();
   var latlngpoint = event.latLng;
   console.log(latlngpoint);
-  var marker = new google.maps.Marker({
-    position: latlngpoint,
-    map: window.map
-  })
+  // main_marker = new google.maps.Marker({
+  //   position: latlngpoint,
+  //   map: window.map
+  // })
+  // main_marker = marker;
 
   var url = 'http://forecast.io/embed/#';
   var latitude_param = 'lat='+latlngpoint.ob;
   var longitude_param = 'lon='+latlngpoint.pb;
   var weather_div = $('#weather_div');
   var new_iframe = $('<iframe></iframe>');
+  var latlng = new google.maps.LatLng(latlngpoint.ob, latlngpoint.pb);
+  var city_name;
+  var create_new_iframe = function(){
+    weather_div.html('');
+    new_iframe.attr('type','text/html');
+    new_iframe.attr('frameborder','0');
+    new_iframe.attr('height','245px');
+    new_iframe.attr('width','100%');
+    new_iframe.attr('src',url+latitude_param+'&'+longitude_param+'&name='+city_name);
+    weather_div.html(new_iframe);
+  };
 
-  weather_div.html('');
-  new_iframe.attr('type','text/html');
-  new_iframe.attr('frameborder','0');
-  new_iframe.attr('height','245px');
-  new_iframe.attr('width','100%');
-  new_iframe.attr('src',url+latitude_param+'&'+longitude_param+'&name=At Location Clicked');
-  weather_div.html(new_iframe);
-
-
+  geocoder.geocode({'latLng': latlng}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+        
+        main_marker = new google.maps.Marker({
+            position: latlng,
+            map: map
+        });
+        city_name = results[1].formatted_address;
+        create_new_iframe()
+      } else {
+        alert('No results found');
+      }
+    } else {
+      alert('Geocoder failed due to: ' + status);
+    }
+  });
+  
+  
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

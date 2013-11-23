@@ -7,69 +7,155 @@ src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqgzD3RmdQy2yEMHKTOQXyVWm2
 </script>
 
 <script>
-var v=new google.maps.LatLng(39.5839,-111.432343);
-var w=new google.maps.LatLng(40.75,-111.8833);
-var x=new google.maps.LatLng(40.9269,-111.8800);
-var y=new google.maps.LatLng(41.0781,-111.8353);
-var z=new google.maps.LatLng(41.7378,-111.8308);
+$(document).ready(function(){
 
-var a=new google.maps.LatLng(39.1839,-111.1343);
-var b=new google.maps.LatLng(40.25,-111.2833);
-var c=new google.maps.LatLng(40.3269,-111.3800);
+  var v=new google.maps.LatLng(39.5839,-111.432343);
+  var w=new google.maps.LatLng(40.75,-111.8833);
+  var x=new google.maps.LatLng(40.9269,-111.8800);
+  var y=new google.maps.LatLng(41.0781,-111.8353);
+  var z=new google.maps.LatLng(41.7378,-111.8308);
 
-function initialize()
-{
-var mapProp = {
-  center:x,
-  zoom:9,
-  mapTypeId:google.maps.MapTypeId.ROADMAP
+  var a=new google.maps.LatLng(39.1839,-111.1343);
+  var b=new google.maps.LatLng(40.25,-111.2833);
+  var c=new google.maps.LatLng(40.3269,-111.3800);
+  var flightPath1;
+  var flightPath2;
+  var firstPolygon;
+  var secondPolygon;
+  var allPolygons = []
+  var markers = [];
+  var marker_polygon = [];
+
+  function initialize()
+  {
+  var mapProp = {
+    center:x,
+    zoom:9,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+
+  window.map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+  var myTrip=[v,w,x,y];
+  flightPath1=new google.maps.Polygon({
+    path:myTrip,
+    strokeColor:"#0000FF",
+    strokeOpacity:0.5,
+    strokeWeight:2
+    });
+  google.maps.event.addListener(flightPath1, 'click', addPoint);
+
+  flightPath1.setMap(map);
+
+
+  var myTrip=[a,b,c];
+  flightPath2=new google.maps.Polygon({
+    path:myTrip,
+    strokeColor:"#0000FF",
+    strokeOpacity:0.5,
+    strokeWeight:2
+    });
+  google.maps.event.addListener(flightPath2, 'click', addPoint);
+
+  flightPath2.setMap(map);
+  allPolygons.push(flightPath1, flightPath2);
+  }
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarkers(force_clear) {
+    if (markers.length >= 2 || force_clear == true){
+      $.each(markers,function(index, marker){
+        marker.setMap(null);
+      });
+      markers = [];
+      reset_inputs();
+      marker_polygon = [];
+    }
+  }
+
+  function addPoint(event) {
+    clearMarkers();
+    
+    var latlngpoint = event.latLng;
+    console.log(latlngpoint);
+    var marker = new google.maps.Marker({
+      position: latlngpoint,
+      map: window.map
+    });
+    markers.push(marker);
+    add_marker_data_to_inputs();
+    // if (firstPolygon) {
+    //   if (google.maps.geometry.poly.containsLocation(latlngpoint, flightPath1)){
+    //     secondPolygon = flightPath1;
+    //   }
+    //   else if (google.maps.geometry.poly.containsLocation(latlngpoint, flightPath2)){
+    //     secondPolygon = flightPath2;
+    //   }
+    // }
+    // if (!firstPolygon) {
+    //   if (google.maps.geometry.poly.containsLocation(latlngpoint, flightPath1)){
+    //     firstPolygon = flightPath1;
+    //   }
+    //   else if (google.maps.geometry.poly.containsLocation(latlngpoint, flightPath2)){
+    //     firstPolygon = flightPath2;
+    //   }
+    // } 
+
+    for (index in allPolygons){
+        // console.debug(allPolygons[index]);
+      if (google.maps.geometry.poly.containsLocation(latlngpoint, allPolygons[index])){
+        marker_polygon.push(allPolygons[index]);
+        // firstPolygon = thisPolygon
+        // console.debug('woot');
+      }
+    }
+     
+    check_same_polygon();
+    // Other validations
+
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+  
+  var check_same_polygon = function(){
+    if (marker_polygon.length == 2) {
+      if (marker_polygon[0] == marker_polygon[1]){
+        alert('they are the same');
+      }
+      else{
+        alert('they are NOT the same');
+      }
+    }
   };
 
-window.map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  var add_marker_data_to_inputs = function(){
+    $.each(markers,function(index, marker){
+      // console.debug(markers);
+      $('.input_coordinates')[index].value = marker.position;
+    });
+  };
 
-var myTrip=[v,w,x,y];
-var flightPath=new google.maps.Polygon({
-  path:myTrip,
-  strokeColor:"#0000FF",
-  strokeOpacity:0.5,
-  strokeWeight:2
+  var reset_inputs = function(){
+    $('.input_coordinates').each(function(index, element){
+      $(element).val('');
+    });
+  };
+
+  $('#reset_button').click(function(){
+    reset_inputs();
+    clearMarkers(true);
   });
-google.maps.event.addListener(flightPath, 'click', addPoint);
-
-flightPath.setMap(map);
-
-var myTrip=[a,b,c];
-var flightPath=new google.maps.Polygon({
-  path:myTrip,
-  strokeColor:"#0000FF",
-  strokeOpacity:0.5,
-  strokeWeight:2
-  });
-google.maps.event.addListener(flightPath, 'click', addPoint);
-
-flightPath.setMap(map);
-
-google.maps.event.addListener(map, 'click', addPoint);
-
-
-
-
-}
-
-function addPoint(event) {
-  var latlngpoint = event.latLng;
-  console.log(latlngpoint);
-  var marker = new google.maps.Marker({
-    position: latlngpoint,
-    map: window.map
-  })
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
+});
 </script>
 </head>
 
 <body>
+<div>
+  <input type='text' class='input_coordinates' value='test'/>
+  <input type='text' class='input_coordinates' value='me'/>
+  <input id='reset_button' type='button' value='Reset' />
+</div>  
+<br/>
 <div id="googleMap" style="width:100%;height:580px;"></div>
 </body>
 </html>
