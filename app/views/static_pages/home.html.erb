@@ -1,12 +1,76 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<h1>
-  <center> <b>
-    <div class="well well-sm">This is Logan's Portfolio</div>
-  </center><b>
-</h1>
+<html>
+<head>
 
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqgzD3RmdQy2yEMHKTOQXyVWm2kW0L1yg&sensor=false">
+</script>
+
+<script>
+var v=new google.maps.LatLng(39.5839,-111.432343);
+var w=new google.maps.LatLng(40.75,-111.8833);
+var x=new google.maps.LatLng(40.9269,-111.8800);
+var y=new google.maps.LatLng(41.0781,-111.8353);
+var z=new google.maps.LatLng(41.7378,-111.8308);
+
+var a=new google.maps.LatLng(39.1839,-111.1343);
+var b=new google.maps.LatLng(40.25,-111.2833);
+var c=new google.maps.LatLng(40.3269,-111.3800);
+
+function initialize()
+{
+var mapProp = {
+  center:x,
+  zoom:9,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+
+window.map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+var myTrip=[v,w,x,y];
+var flightPath=new google.maps.Polygon({
+  path:myTrip,
+  strokeColor:"#0000FF",
+  strokeOpacity:0.5,
+  strokeWeight:2
+  });
+google.maps.event.addListener(flightPath, 'click', addPoint);
+
+flightPath.setMap(map);
+
+var myTrip=[a,b,c];
+var flightPath=new google.maps.Polygon({
+  path:myTrip,
+  strokeColor:"#0000FF",
+  strokeOpacity:0.5,
+  strokeWeight:2
+  });
+google.maps.event.addListener(flightPath, 'click', addPoint);
+
+flightPath.setMap(map);
+
+google.maps.event.addListener(map, 'click', addPoint);
+
+
+
+
+}
+
+function addPoint(event) {
+  var latlngpoint = event.latLng;
+  console.log(latlngpoint);
+  var marker = new google.maps.Marker({
+    position: latlngpoint,
+    map: window.map
+  })
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+
+<body>
+<div id="googleMap" style="width:100%;height:580px;"></div>
 
 <div class="row">
 <div class='post-tile col-xs-6 col-sm-4 col-md-6 no-gutters' >
@@ -24,4 +88,5 @@
 </div>
 </div>
 <% end %>
+</body>
 </html>

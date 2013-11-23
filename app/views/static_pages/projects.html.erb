@@ -21,7 +21,7 @@ function initialize()
 {
 var mapProp = {
   center:x,
-  zoom:7,
+  zoom:9,
   mapTypeId:google.maps.MapTypeId.ROADMAP
   };
 
@@ -51,11 +51,14 @@ flightPath.setMap(map);
 
 google.maps.event.addListener(map, 'click', addPoint);
 
+
+
+
 }
 
 function addPoint(event) {
-  console.log(event);
   var latlngpoint = event.latLng;
+  console.log(latlngpoint);
   var marker = new google.maps.Marker({
     position: latlngpoint,
     map: window.map

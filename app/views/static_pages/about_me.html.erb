@@ -1,13 +1,27 @@
-<div class="jumbotron">
-  <div class="container">
-    <h1>Get a Hold of Me!</h1>
-    <p>
-      <span class="glyphicon glyphicon-phone-alt"></span> Call Me 801.555.1234
-    </p>
-    <p>
-      <span class="glyphicon glyphicon-envelope"></span> Email Address - 
-    </p>
-    <p>Twitter - </p>
-    <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-  </div>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqgzD3RmdQy2yEMHKTOQXyVWm2kW0L1yg&sensor=false">
+</script>
+
+<script>
+function initialize()
+{
+var mapProp = {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+
+<body>
+<div id="googleMap" style="width:100%;height:580;"></div>
+
+</body>
+</html>
