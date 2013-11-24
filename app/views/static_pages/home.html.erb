@@ -13,9 +13,7 @@ var x=new google.maps.LatLng(40.9269,-111.8800);
 var y=new google.maps.LatLng(41.0781,-111.8353);
 var z=new google.maps.LatLng(41.7378,-111.8308);
 
-var a=new google.maps.LatLng(39.1839,-111.1343);
-var b=new google.maps.LatLng(40.25,-111.2833);
-var c=new google.maps.LatLng(40.3269,-111.3800);
+
 // var marker;
 var map;
 var geocoder;
@@ -44,14 +42,7 @@ google.maps.event.addListener(flightPath, 'click', addPoint);
 
 flightPath.setMap(map);
 
-var myTrip=[a,b,c];
-var flightPath=new google.maps.Polygon({
-  path:myTrip,
-  strokeColor:"#0000FF",
-  strokeOpacity:0.5,
-  strokeWeight:2
-  });
-google.maps.event.addListener(flightPath, 'click', addPoint);
+
 
 flightPath.setMap(map);
 
@@ -122,10 +113,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </head>
 
 <body>
-<div id="googleMap" style="width:100%;height:580px;"></div>
 
-<div class="row">
-<div class='post-tile col-xs-6 col-sm-4 col-md-12 no-gutters' >
+<div class='post-tile col-xs-6 col-sm-4 col-md-6 no-gutters' >
+<div id="googleMap" style="width:100%;height:580px;"></div>
+</div>
+
+<div class='post-tile col-xs-6 col-sm-4 col-md-6 no-gutters' >
 <% latitude, longitude = @ip_info['loc'].split(',') %>
 <% if @ip_info %>
 <br />
