@@ -1,229 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<script
-src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqgzD3RmdQy2yEMHKTOQXyVWm2kW0L1yg&sensor=false">
-</script>
-
-<script>
-// var v=new google.maps.LatLng(39.5839,-111.432343);
-// var w=new google.maps.LatLng(40.75,-111.8833);
-var x=new google.maps.LatLng(40.9269,-111.8800);
-// var y=new google.maps.LatLng(41.0781,-111.8353);
-// var z=new google.maps.LatLng(41.7378,-111.8308);
-
-
-// var marker;
-var map;
-var geocoder;
-var address;
-var city_name;
-var city_name1;
-function initialize()
-{
-var mapProp = {
-  center:x,
-  zoom:9,
-  mapTypeId:google.maps.MapTypeId.ROADMAP,
-  styles: [
-    {
-        "featureType": "road",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.province",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "stylers": [
-            {
-                "color": "#004b76"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.natural",
-        "stylers": [
-            {
-                "visibility": "on"
-            },
-            {
-                "color": "#fff6cb"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.country",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {
-                "visibility": "on"
-            },
-            {
-                "color": "#7f7d7a"
-            },
-            {
-                "lightness": 10
-            },
-            {
-                "weight": 1
-            }
-        ]
-    }
-]
-  };
-
-window.map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-geocoder = new google.maps.Geocoder();
-
-google.maps.event.addListener(window.map, 'click', addPoint);
-
-
-}
-
-var main_marker = null;
-function clearOverlays() {
-  if (main_marker != null) {
-    main_marker.setMap(null);
-  }
-  main_marker = null;
-}
-
-var create_new_iframe = function(latitude_param, longitude_param, name_param){
-  var url = 'http://forecast.io/embed/#';
-  var weather_div = $('#weather_div');
-  var new_iframe = $('<iframe></iframe>');
-  var new_url = url+'lat='+latitude_param+'&'+'lon='+longitude_param;
-  if (name_param != null) {
-    new_url += '&name='+name_param;
-  }
-  weather_div.html('');
-  new_iframe.attr('type','text/html');
-  new_iframe.attr('frameborder','0');
-  new_iframe.attr('height','245px');
-  new_iframe.attr('width','100%');
-  new_iframe.attr('src', new_url);
-  weather_div.html(new_iframe);
-};
-
-function addPoint(event) {
-  clearOverlays();
-  var latlngpoint = event.latLng;
-  // main_marker = new google.maps.Marker({
-  //   position: latlngpoint,
-  //   map: window.map
-  // })
-  // main_marker = marker;
-
-  var url = 'http://forecast.io/embed/#';
-  var latitude_param = latlngpoint.ob;
-  var longitude_param = latlngpoint.pb;
-  // var weather_div = $('#weather_div');
-  // var new_iframe = $('<iframe></iframe>');
-  var latlng = new google.maps.LatLng(latlngpoint.ob, latlngpoint.pb);
-  create_new_iframe(latitude_param, longitude_param, null);
-  // var create_new_iframe = function(){
-  //   weather_div.html('');
-  //   new_iframe.attr('type','text/html');
-  //   new_iframe.attr('frameborder','0');
-  //   new_iframe.attr('height','245px');
-  //   new_iframe.attr('width','100%');
-  //   new_iframe.attr('src',url+latitude_param+'&'+longitude_param+'&name='+city_name);
-  //   weather_div.html(new_iframe);
-  // };
-
-  geocoder.geocode({'latLng': latlng}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      if (results[1]) {
-        
-        main_marker = new google.maps.Marker({
-            position: latlng,
-            map: map
-        });
-        // city_name = results[1].formatted_address;
-        create_new_iframe(latitude_param, longitude_param, results[1].formatted_address)
-      } else {
-        alert('No results found');
-      }
-    } else {
-      alert('Geocoder failed due to: ' + status);
-    }
-  }); 
-}
-
-function codeAddress() {
-  clearOverlays();
-  var address = document.getElementById('address').value;
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      main_marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-      });
-      // city_name1 = results[0].geometry.location;
-      create_new_iframe(results[0].geometry.location.ob, results[0].geometry.location.pb, address);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
-
-
-
-google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-</head>
-
-<body>
-
-<div class='post-tile col-xs-6 col-sm-4 col-md-6 no-gutters' >
-<div id="googleMap" style="width:100%;height:580px;"></div>
+<div class='post-tile col-xs-12 col-sm-6 col-md-6 no-gutters' >
+  <div id="googleMap"></div>
 </div>
 
-<div class='post-tile col-xs-6 col-sm-4 col-md-6 no-gutters' >
-  <input id="address" type="textbox" value="SLC, UT">
-  <input type="button" value="Geocode" onclick="codeAddress()">
-
-<% latitude, longitude = @ip_info['loc'].split(',') %>
-<% if @ip_info %>
-<br />
-<br />
-<br />
-  <div id='weather_div' >
-    <iframe id="forecast_embed" type="text/html" frameborder="0" height="245px" width="100%" src="http://forecast.io/embed/#lat=<%= latitude %>&lon=<%= longitude %>&name=<%= @ip_info['city'] %>"> </iframe>
+<div class='post-tile col-xs-12 col-sm-6 col-md-6 no-gutters' >
+  <h3> Search for weather by location</h3>
+  <div class='row'>
+    <div class='col-xs-8'>
+      <input class="form-control" id="address" type="textbox" placeholder="Input a city/state">
+    </div>
+    <div class='col-xs-4'>
+      <input type="button" class='btn btn-primary' value="Get Weather" onclick="codeAddress()">
+    </div>  
   </div>
+  <% latitude, longitude = @ip_info['loc'].split(',') %>
+  <% if @ip_info %>
+    <br />
+    <br />
+    <br />
+    <div id='weather_div' >
+      <iframe id="forecast_embed" type="text/html" frameborder="0" height="245px" width="100%" src="http://forecast.io/embed/#lat=<%= latitude %>&lon=<%= longitude %>&name=<%= @ip_info['city'] %>"> </iframe>
+    </div>
+  <% end %>
 </div>
-
-</div>
-<% end %>
-</body>
-</html>
