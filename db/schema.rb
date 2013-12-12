@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115001622) do
+ActiveRecord::Schema.define(:version => 20131212005251) do
+
+  create_table "admins", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "areas", :force => true do |t|
+    t.string   "name"
+    t.string   "kml_path"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "volume"
+    t.string   "area_type"
+    t.string   "transfer"
+    t.string   "kml_id"
+  end
 
   create_table "messages", :force => true do |t|
     t.string   "email"

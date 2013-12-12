@@ -19,6 +19,7 @@ root :to => 'static_pages#home'
   get "posts", to: "posts#index", as: :posts  
   post "posts", to: "posts#create", as: :posts
   get "path", to: 'controller#action', as: :name_of_path
+  get 'map_data', to: 'static_pages#data', as: :map_data
 
   # get "contact-us", to: 'contact_new#new', as: :contact
   # post "contact-us", to: 'contact_new#create', as: :contact
