@@ -87,7 +87,7 @@ initialize_kml_areas = ->
     kml_path = $(value)
     kml_layer = new google.maps.KmlLayer(kml_path.data("path"),
       suppressInfoWindows: true
-      preserveViewport: false
+      preserveViewport: true
       map: map
     )
     kml_layer.setMap map
@@ -99,21 +99,24 @@ addPoint = (event) ->
   $.get "/map_data", map_point: event.featureData.id, (data) ->
     # console.log event.featureData.id
     map_data = data.map_data
-  # console.log map_data
+    console.log map_data
 
     $("#data").html "      
     <div class='table heading'>        
       <table class='table table-bordered table-striped'>          
+        <h3> " + map_data.name + " </h3>
         <thead>            
           <tr>              
-            <td> " + map_data.name + " </td>              
-            <td> " + map_data.transfer + " </td>            
+            <td><b>Volume</b></td>              
+            <td><b>Source</b></td>
+            <td><b>Transferability</b></td>
           </tr>                  
         </thead>          
         <tbody>            
           <tr>              
-            <td> " + map_data.name + " </td>              
-            <td> " + map_data.volume + " </td>            
+            <td> " + map_data.volume + " </td>              
+            <td> " + map_data.area_type + " </td>
+            <td> " + map_data.transfer + " </td>            
           </tr>                        
         </tbody>        
         </table>      

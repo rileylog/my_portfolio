@@ -1,0 +1,21 @@
+<%= simple_form_for(@fighter) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :total_fights %>
+    <%= f.input :wins %>
+    <%= f.input :losses %>
+    <%= f.input :draws %>
+    <%= f.input :knockouts %>
+    <%= f.input :submissions %>
+    <%= f.input :decisions %>
+    <%= f.input :height %>
+    <%= f.input :weight %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

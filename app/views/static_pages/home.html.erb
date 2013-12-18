@@ -1,24 +1,32 @@
-<div class='post-tile col-xs-12 col-sm-6 col-md-6 no-gutters' >
-  <div id="googleMap"></div>
-</div>
+<p><center><%= image_tag ('pipe.jpg'), class: 'img-responsive' %></center></p>
 
-<div class='post-tile col-xs-12 col-sm-6 col-md-6 no-gutters' >
-  <h3> Search for weather by location</h3>
-  <div class='row'>
-    <div class='col-xs-8'>
-      <input class="form-control" id="address" type="textbox" placeholder="Input a city/state">
+
+<h1>Welcome to JRE!</h1>
+
+<div>
+  <div class='col-sm-4'>
+    <div class='thumbnail text-center'>
+      <h2 class="glyphicon glyphicon-fullscreen"></h2>
+      <h5>Services</h5>
+      <p>Learn about who we are and what we have done</p></br></br>
     </div>
-    <div class='col-xs-4'>
-      <input type="button" class='btn btn-primary' value="Get Weather" onclick="codeAddress()">
-    </div>  
   </div>
-  <% latitude, longitude = @ip_info['loc'].split(',') %>
-  <% if @ip_info %>
-    <br />
-    <br />
-    <br />
-    <div id='weather_div' >
-      <iframe id="forecast_embed" type="text/html" frameborder="0" height="245px" width="100%" src="http://forecast.io/embed/#lat=<%= latitude %>&lon=<%= longitude %>&name=<%= @ip_info['city'] %>&color=#004B76&font=Helvetica"> </iframe>
+  <div class='col-sm-4'>
+    <div class='thumbnail text-center'>
+      <h2 class="glyphicon glyphicon-search"></h2>
+      <h5>We solve your water right problems</h5>
+      <p>Let us figure out what you need done and then let us solve it</p>
     </div>
-  <% end %>
+  </div>
+    <div class='col-sm-4'>
+      <div class='thumbnail text-center'>
+      <h2 class="glyphicon glyphicon-eye-open"></h2>
+      <h5>Recruit only the best</h5>
+      <p>After you have cut through the fluff, or found that diamond in the rough, its game on.</p></br>
+    </div>
+    </br>
+    </br>
+    </br>
+    </br>
+  </div>
 </div>
